@@ -7,15 +7,179 @@
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
+html,
+body {
+  height: 100%;
+  min-height: 100vh;
+  color: var(--foreground);
+  background: var(--background);
+}
+
+/* Ensure textareas fill their containers properly */
+textarea {
+  display: block !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  overflow-y: auto !important;
+  max-height: 100% !important;
+}
+
+.nextui-textarea-input-container {
+  height: 100% !important;
+  min-height: 100% !important;
+  max-height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+
+.full-height-textarea {
+  height: 100% !important;
+  min-height: 100% !important;
+  max-height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+
+.full-height-textarea > div {
+  height: 100% !important;
+  min-height: 100% !important;
+  max-height: 100% !important;
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+
+.full-height-textarea textarea {
+  height: 100% !important;
+  min-height: 100% !important;
+  flex: 1 !important;
+  padding: 0.75rem 1rem !important;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 767px) {
+  .grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+  
+  .card {
+    height: auto !important;
+    min-height: 200px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+  }
+
+  .full-height-textarea {
+    flex: 1 !important;
+    min-height: 0 !important;
+  }
+
+  .nextui-textarea-input-container {
+    flex: 1 !important;
+    min-height: 0 !important;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+/* History panel responsive styles */
+@media (max-width: 767px) {
+  .history-panel-open {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 50;
+    background-color: var(--background);
+  }
+
+  /* Settings modal mobile styles */
+  .settings-modal-mobile {
+    margin: 0 !important;
+    height: calc(100vh - 64px) !important;
+    max-height: none !important;
+    position: absolute !important;
+    top: 64px !important;
+    border-radius: 0 !important;
+    background: var(--background) !important;
+  }
+
+  .settings-modal-mobile [role="dialog"] {
+    height: 100% !important;
+    max-height: none !important;
+  }
+}
+
+/* Modern toolbar styles */
+.modern-toolbar {
+  position: relative;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark .modern-toolbar {
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.05));
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Animation styles */
+.toolbar-button {
+  position: relative;
+  transition: all 0.2s ease-in-out;
+}
+
+.toolbar-button svg {
+  transition: all 0.2s ease-in-out;
+}
+
+.toolbar-button:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.dark .toolbar-button:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.toolbar-button svg.text-success {
+  animation: scaleUp 0.2s ease-in-out;
+}
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Remove the floating toolbar styles since we're not using them anymore */
+.floating-toolbar {
+  display: none;
+}
+
+/* Glass morphism effect */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.dark .glass-effect {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
