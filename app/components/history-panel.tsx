@@ -4,7 +4,7 @@ import { Input, Button, Card, Checkbox } from "@nextui-org/react";
 import { Search, Star, Trash2, StarOff } from 'lucide-react';
 import { TranslationHistoryItem, TranslationHistoryState } from "../types/history";
 import { formatDistanceToNow } from 'date-fns';
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useState, useEffect } from 'react';
 
 interface HistoryPanelProps {

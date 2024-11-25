@@ -5,6 +5,7 @@ import { useTheme } from "../contexts/theme-context"
 import { openaiModels } from "../constants/openai-models"
 import { groqModels } from "../constants/groq-models"
 import { useState, useEffect } from "react"
+import { getLocalStorage, setLocalStorage, removeLocalStorage } from '../utils/localStorage'
 
 interface SettingsModalProps {
   isOpen: boolean
@@ -13,17 +14,27 @@ interface SettingsModalProps {
 
 export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
   const { theme, setTheme } = useTheme()
-  const [apiHost, setApiHost] = useState(localStorage.getItem('apiHost') || 'https://api.openai.com/v1')
-  const [apiKey, setApiKey] = useState(localStorage.getItem('apiKey') || '')
-  const [selectedModel, setSelectedModel] = useState(localStorage.getItem('selectedModel') || '')
-  const [translationService, setTranslationService] = useState(localStorage.getItem('translationService') || 'openai')
+  const [apiHost, setApiHost] = useState(getLocalStorage('apiHost', 'https://api.openai.com/v1'))
+  const [apiKey, setApiKey] = useState(getLocalStorage('apiKey', ''))
+  const [selectedModel, setSelectedModel] = useState(getLocalStorage('selectedModel', 'gpt-4o-mini'))
+  const [translationService, setTranslationService] = useState(getLocalStorage('translationService', 'openai'))
   const [showApiKey, setShowApiKey] = useState(false)
   const [isMobile, setIsMobile] = useState(false);
 
+  // Load initial values from localStorage
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    setApiHost(getLocalStorage('apiHost', 'https://api.openai.com/v1'));
+    setApiKey(getLocalStorage('apiKey', ''));
+    setSelectedModel(getLocalStorage('selectedModel', 'gpt-4o-mini'));
+    setTranslationService(getLocalStorage('translationService', 'openai'));
+  }, []);
+
   // Save theme to localStorage when it changes
   useEffect(() => {
-    localStorage.setItem('theme', theme)
-  }, [theme])
+    if (typeof window === 'undefined') return;
+    setLocalStorage('theme', theme);
+  }, [theme]);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -36,21 +47,23 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
   }, []);
 
   const handleSave = () => {
-    localStorage.setItem('apiHost', apiHost)
-    localStorage.setItem('apiKey', apiKey)
-    localStorage.setItem('selectedModel', selectedModel)
-    localStorage.setItem('translationService', translationService)
+    if (typeof window === 'undefined') return;
+    setLocalStorage('apiHost', apiHost);
+    setLocalStorage('apiKey', apiKey);
+    setLocalStorage('selectedModel', selectedModel);
+    setLocalStorage('translationService', translationService);
     // Dispatch storage event for other components to detect the change
     window.dispatchEvent(new Event('storage'))
     onClose()
   }
 
   const handleRestoreDefaults = () => {
+    if (typeof window === 'undefined') return;
     // Clear all settings from localStorage
-    localStorage.removeItem('apiHost')
-    localStorage.removeItem('apiKey')
-    localStorage.removeItem('selectedModel')
-    localStorage.removeItem('translationService')
+    removeLocalStorage('apiHost');
+    removeLocalStorage('apiKey');
+    removeLocalStorage('selectedModel');
+    removeLocalStorage('translationService');
     
     // Reset state to default values
     setApiHost('https://api.openai.com/v1')

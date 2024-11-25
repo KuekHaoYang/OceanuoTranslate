@@ -1,7 +1,7 @@
 'use client'
 
 import { Button, Card, Select, SelectItem, Textarea } from "@nextui-org/react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { SettingsButton } from "./components/settings-button";
 import { StatusDisplay } from "./components/status-display";
@@ -12,6 +12,7 @@ import { TranslationHistoryItem, TranslationHistoryState } from "./types/history
 import { v4 as uuidv4 } from 'uuid';
 import { HistoryPanel } from "./components/history-panel";
 import axios from 'axios';
+import { getLocalStorage, setLocalStorage } from './utils/localStorage';
 
 interface TranslationState {
   status: 'idle' | 'loading' | 'streaming' | 'error'
@@ -25,43 +26,56 @@ export default function Home() {
     status: 'idle',
     text: ""
   });
-  const [sourceLang, setSourceLang] = useState(() => localStorage.getItem('sourceLang') || "auto-detect");
-  const [targetLang, setTargetLang] = useState(() => localStorage.getItem('targetLang') || "English");
+  const [sourceLang, setSourceLang] = useState("auto-detect");
+  const [targetLang, setTargetLang] = useState("English");
   const [showHistory, setShowHistory] = useState(false);
-  const [oneByOne, setOneByOne] = useState(() => localStorage.getItem('oneByOne') === 'true');
+  const [oneByOne, setOneByOne] = useState(false);
   const [copySourceStatus, setCopySourceStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [copyTranslationStatus, setCopyTranslationStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [clearSourceStatus, setClearSourceStatus] = useState<'idle' | 'success'>('idle');
   const [clearTranslationStatus, setClearTranslationStatus] = useState<'idle' | 'success'>('idle');
   const [pasteStatus, setPasteStatus] = useState<'idle' | 'success' | 'error'>('idle');
-  const [history, setHistory] = useState<TranslationHistoryState>(() => {
-    try {
-      const savedHistory = localStorage.getItem('translationHistory');
-      const parsedHistory = savedHistory ? JSON.parse(savedHistory) : null;
-      return {
-        items: Array.isArray(parsedHistory?.items) ? parsedHistory.items : [],
-        searchQuery: parsedHistory?.searchQuery || '',
-        showFavoritesOnly: parsedHistory?.showFavoritesOnly || false
-      };
-    } catch (error) {
-      console.error('Error parsing history from localStorage:', error);
-      return {
-        items: [],
-        searchQuery: '',
-        showFavoritesOnly: false
-      };
-    }
+  const [history, setHistory] = useState<TranslationHistoryState>({
+    items: [],
+    searchQuery: '',
+    showFavoritesOnly: false
   });
-  const [translationService, setTranslationService] = useState(localStorage.getItem('translationService') || 'openai');
+  const [translationService, setTranslationService] = useState('openai');
   const abortControllerRef = useRef<AbortController | null>(null);
 
+  // Load initial state from localStorage on client side
   useEffect(() => {
-    localStorage.setItem('translationHistory', JSON.stringify(history));
+    if (typeof window === 'undefined') return;
+    
+    setSourceLang(getLocalStorage('sourceLang', "auto-detect"));
+    setTargetLang(getLocalStorage('targetLang', "English"));
+    setOneByOne(getLocalStorage('oneByOne') === 'true');
+    setTranslationService(getLocalStorage('translationService', 'openai'));
+    
+    try {
+      const savedHistory = getLocalStorage('translationHistory');
+      const parsedHistory = savedHistory ? JSON.parse(savedHistory) : null;
+      if (parsedHistory) {
+        setHistory({
+          items: Array.isArray(parsedHistory.items) ? parsedHistory.items : [],
+          searchQuery: parsedHistory.searchQuery || '',
+          showFavoritesOnly: parsedHistory.showFavoritesOnly || false
+        });
+      }
+    } catch (error) {
+      console.error('Error parsing history from localStorage:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    setLocalStorage('translationHistory', JSON.stringify(history));
   }, [history]);
 
   useEffect(() => {
     const handleStorageChange = () => {
-      const newService = localStorage.getItem('translationService') || 'openai';
+      if (typeof window === 'undefined') return;
+      const newService = getLocalStorage('translationService', 'openai');
       setTranslationService(newService);
       if (newService === 'deepl') {
         setSourceLang('auto-detect');
@@ -84,9 +98,10 @@ export default function Home() {
   }, [translationService]);
 
   useEffect(() => {
-    localStorage.setItem('sourceLang', sourceLang);
-    localStorage.setItem('targetLang', targetLang);
-    localStorage.setItem('oneByOne', oneByOne.toString());
+    if (typeof window === 'undefined') return;
+    setLocalStorage('sourceLang', sourceLang);
+    setLocalStorage('targetLang', targetLang);
+    setLocalStorage('oneByOne', oneByOne.toString());
   }, [sourceLang, targetLang, oneByOne]);
 
   const handlePaste = async () => {
@@ -163,9 +178,9 @@ export default function Home() {
       return;
     }
 
-    const apiHost = localStorage.getItem('apiHost');
-    const apiKey = localStorage.getItem('apiKey');
-    const selectedModel = localStorage.getItem('selectedModel');
+    const apiHost = getLocalStorage('apiHost');
+    const apiKey = getLocalStorage('apiKey');
+    const selectedModel = getLocalStorage('selectedModel');
     const deeplApi = process.env.NEXT_PUBLIC_DEEPLX_API;
 
     if (!sourceText) {
