@@ -26,68 +26,42 @@ textarea {
   height: 100% !important;
   min-height: 100% !important;
   overflow-y: auto !important;
-  max-height: none !important;
-  width: 100% !important;
-  box-sizing: border-box !important;
-  resize: none !important;
-  border: none !important;
-  background: transparent !important;
+  max-height: 100% !important;
 }
 
 .nextui-textarea-input-container {
   height: 100% !important;
   min-height: 100% !important;
-  max-height: none !important;
+  max-height: 100% !important;
   display: flex !important;
   flex-direction: column !important;
   overflow: hidden !important;
-  width: 100% !important;
-  border: none !important;
-  background: transparent !important;
 }
 
 .full-height-textarea {
   height: 100% !important;
   min-height: 100% !important;
-  max-height: none !important;
+  max-height: 100% !important;
   display: flex !important;
   flex-direction: column !important;
   overflow: hidden !important;
-  width: 100% !important;
-  border: none !important;
-  background: transparent !important;
 }
 
 .full-height-textarea > div {
   height: 100% !important;
   min-height: 100% !important;
-  max-height: none !important;
-  flex: 1 1 auto !important;
+  max-height: 100% !important;
+  flex: 1 !important;
   display: flex !important;
   flex-direction: column !important;
   overflow: hidden !important;
-  width: 100% !important;
-  border: none !important;
-  background: transparent !important;
 }
 
 .full-height-textarea textarea {
   height: 100% !important;
   min-height: 100% !important;
-  flex: 1 1 auto !important;
+  flex: 1 !important;
   padding: 0.75rem 1rem !important;
-  width: 100% !important;
-  resize: none !important;
-  border: none !important;
-  background: transparent !important;
-}
-
-/* Ensure the card content fills the available space */
-.card-content {
-  display: flex !important;
-  flex-direction: column !important;
-  height: 100% !important;
-  min-height: 100% !important;
 }
 
 /* Mobile responsive styles */
@@ -96,24 +70,28 @@ textarea {
     display: flex !important;
     flex-direction: column !important;
     gap: 1rem !important;
+    height: calc(100vh - 64px) !important;
   }
   
   .card {
-    height: auto !important;
-    min-height: 200px !important;
+    height: 100% !important;
+    min-height: 0 !important;
     display: flex !important;
     flex-direction: column !important;
     overflow: hidden !important;
+    flex: 1 !important;
   }
 
   .full-height-textarea {
     flex: 1 !important;
     min-height: 0 !important;
+    height: 100% !important;
   }
 
   .nextui-textarea-input-container {
     flex: 1 !important;
     min-height: 0 !important;
+    height: 100% !important;
   }
 }
 
@@ -149,22 +127,19 @@ textarea {
 /* Modern toolbar styles */
 .modern-toolbar {
   position: relative;
-  background: transparent;
-  border-bottom: 1px solid var(--nextui-border-color);
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .dark .modern-toolbar {
-  background: transparent;
-  border-bottom: 1px solid var(--nextui-border-color);
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.05));
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 /* Animation styles */
 .toolbar-button {
-  transition: all 0.2s ease;
-}
-
-.toolbar-button:hover {
-  background: var(--nextui-default-100);
+  position: relative;
+  transition: all 0.2s ease-in-out;
 }
 
 .toolbar-button svg {
@@ -173,7 +148,7 @@ textarea {
 
 .toolbar-button:hover {
   transform: translateY(-1px);
-  background: var(--nextui-default-100);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .dark .toolbar-button:hover {
