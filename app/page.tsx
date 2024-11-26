@@ -41,7 +41,6 @@ export default function Home() {
     showFavoritesOnly: false
   });
   const [translationService, setTranslationService] = useState('openai');
-  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
 
   // Keyboard visibility detection
@@ -51,7 +50,6 @@ export default function Home() {
     const handleFocus = () => {
       // Check if the device is mobile
       if (window.innerWidth <= 767) {
-        setIsKeyboardVisible(true);
         document.documentElement.classList.add('keyboard-visible');
         // Scroll the focused element into view with a slight delay
         setTimeout(() => {
@@ -64,7 +62,6 @@ export default function Home() {
     };
 
     const handleBlur = () => {
-      setIsKeyboardVisible(false);
       document.documentElement.classList.remove('keyboard-visible');
     };
 
@@ -73,7 +70,6 @@ export default function Home() {
       const handleVisualViewportResize = () => {
         if (window.innerWidth <= 767) {
           const isKeyboard = window.visualViewport!.height < window.innerHeight;
-          setIsKeyboardVisible(isKeyboard);
           document.documentElement.classList.toggle('keyboard-visible', isKeyboard);
         }
       };
