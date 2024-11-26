@@ -454,7 +454,7 @@ export default function Home() {
         readOnly
         classNames={{
           base: "h-full",
-          input: "h-full resize-none",
+          input: "h-full",
           inputWrapper: "h-full data-[hover=true]:bg-default-100"
         }}
         variant="faded"
@@ -487,9 +487,7 @@ export default function Home() {
       <header className="w-full px-6 py-4 border-b border-default-200 bg-background/80 backdrop-blur-sm supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 shrink-0">
         <div className="max-w-[2000px] mx-auto flex justify-between items-center">
           <div className="flex items-center gap-2">
-            <h1 className="text-xl font-bold bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text text-transparent">
-              OceanuoTranslate
-            </h1>
+            <h1 className="text-xl font-bold">OceanuoTranslate</h1>
           </div>
           <div className="flex items-center gap-2">
             <Button
@@ -572,128 +570,123 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6 flex-1 min-h-0">
-              <Card className="p-0 h-full bg-content1/50 backdrop-blur-sm overflow-hidden">
-                <div className="flex flex-col h-full w-full">
-                  <div className="modern-toolbar px-3 py-1.5 flex items-center justify-between">
-                    <span className="text-sm text-default-500">Source Text</span>
-                    <div className="flex items-center gap-0.5">
-                      <Button 
-                        isIconOnly
-                        size="sm"
-                        variant="light"
-                        onClick={handlePaste}
-                        className="toolbar-button"
-                        aria-label="Paste"
-                      >
-                        {pasteStatus === 'success' ? (
-                          <Check className="w-4 h-4 text-success" />
-                        ) : pasteStatus === 'error' ? (
-                          <X className="w-4 h-4 text-danger" />
-                        ) : (
-                          <Clipboard className="w-4 h-4" />
-                        )}
-                      </Button>
-                      <Button 
-                        isIconOnly
-                        size="sm"
-                        variant="light"
-                        onClick={handleCopySource}
-                        className="toolbar-button"
-                        aria-label="Copy"
-                      >
-                        {copySourceStatus === 'success' ? (
-                          <Check className="w-4 h-4 text-success" />
-                        ) : (
-                          <Copy className="w-4 h-4" />
-                        )}
-                      </Button>
-                      <Button 
-                        isIconOnly
-                        size="sm"
-                        variant="light"
-                        onClick={handleClearSource}
-                        className="toolbar-button text-danger"
-                        aria-label="Clear"
-                      >
-                        {clearSourceStatus === 'success' ? (
-                          <Check className="w-4 h-4 text-success" />
-                        ) : (
-                          <Trash2 className="w-4 h-4" />
-                        )}
-                      </Button>
-                      <Button
-                        isIconOnly
-                        size="sm"
-                        variant="light"
-                        onClick={() => setOneByOne(!oneByOne)}
-                        className={`toolbar-button ${oneByOne ? "text-primary" : ""}`}
-                        aria-label="Toggle word-by-word translation"
-                        isDisabled={translationService === 'deepl'}
-                      >
-                        <SplitSquareHorizontal className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </div>
-                  <div className="flex-1 overflow-hidden p-4">
-                    <Textarea
-                      className="full-height-textarea"
-                      placeholder="Enter text to translate..."
-                      value={sourceText}
-                      onChange={(e) => setSourceText(e.target.value)}
-                      classNames={{
-                        base: "h-full",
-                        input: "h-full resize-none",
-                        inputWrapper: "h-full bg-transparent hover:bg-default-100/50"
-                      }}
-                      variant="bordered"
-                      size="lg"
-                      minRows={30}
-                    />
+            <div className="grid md:grid-cols-2 gap-6 flex-1 min-h-0 h-full">
+              <div className="flex flex-col h-full overflow-hidden border border-default-200 rounded-large">
+                <div className="modern-toolbar px-3 py-1.5 flex items-center justify-between shrink-0">
+                  <span className="text-sm text-default-500">Source Text</span>
+                  <div className="flex items-center gap-0.5">
+                    <Button 
+                      isIconOnly
+                      size="sm"
+                      variant="light"
+                      onClick={handlePaste}
+                      className="toolbar-button"
+                      aria-label="Paste"
+                    >
+                      {pasteStatus === 'success' ? (
+                        <Check className="w-4 h-4 text-success" />
+                      ) : pasteStatus === 'error' ? (
+                        <X className="w-4 h-4 text-danger" />
+                      ) : (
+                        <Clipboard className="w-4 h-4" />
+                      )}
+                    </Button>
+                    <Button 
+                      isIconOnly
+                      size="sm"
+                      variant="light"
+                      onClick={handleCopySource}
+                      className="toolbar-button"
+                      aria-label="Copy"
+                    >
+                      {copySourceStatus === 'success' ? (
+                        <Check className="w-4 h-4 text-success" />
+                      ) : (
+                        <Copy className="w-4 h-4" />
+                      )}
+                    </Button>
+                    <Button 
+                      isIconOnly
+                      size="sm"
+                      variant="light"
+                      onClick={handleClearSource}
+                      className="toolbar-button text-danger"
+                      aria-label="Clear"
+                    >
+                      {clearSourceStatus === 'success' ? (
+                        <Check className="w-4 h-4 text-success" />
+                      ) : (
+                        <Trash2 className="w-4 h-4" />
+                      )}
+                    </Button>
+                    <Button
+                      isIconOnly
+                      size="sm"
+                      variant="light"
+                      onClick={() => setOneByOne(!oneByOne)}
+                      className={`toolbar-button ${oneByOne ? "text-primary" : ""}`}
+                      aria-label="Toggle word-by-word translation"
+                      isDisabled={translationService === 'deepl'}
+                    >
+                      <SplitSquareHorizontal className="w-4 h-4" />
+                    </Button>
                   </div>
                 </div>
-              </Card>
+                <div className="flex-1 overflow-hidden">
+                  <Textarea
+                    className="full-height-textarea"
+                    placeholder="Enter text to translate..."
+                    value={sourceText}
+                    onChange={(e) => setSourceText(e.target.value)}
+                    classNames={{
+                      base: "h-full",
+                      input: "h-full",
+                      inputWrapper: "h-full bg-transparent hover:bg-default-100/50 rounded-none border-0"
+                    }}
+                    variant="bordered"
+                    size="lg"
+                  />
+                </div>
+              </div>
 
-              <Card className="p-0 h-full bg-content1/50 backdrop-blur-sm overflow-hidden">
-                <div className="flex flex-col h-full w-full">
-                  <div className="modern-toolbar px-3 py-1.5 flex items-center justify-between">
-                    <span className="text-sm text-default-500">Translation</span>
-                    <div className="flex items-center gap-0.5">
-                      <Button 
-                        isIconOnly
-                        size="sm"
-                        variant="light"
-                        onClick={handleCopyTranslation}
-                        className="toolbar-button"
-                        aria-label="Copy"
-                      >
-                        {copyTranslationStatus === 'success' ? (
-                          <Check className="w-4 h-4 text-success" />
-                        ) : (
-                          <Copy className="w-4 h-4" />
-                        )}
-                      </Button>
-                      <Button 
-                        isIconOnly
-                        size="sm"
-                        variant="light"
-                        onClick={handleClearTranslation}
-                        className="toolbar-button text-danger"
-                        aria-label="Clear"
-                      >
-                        {clearTranslationStatus === 'success' ? (
-                          <Check className="w-4 h-4 text-success" />
-                        ) : (
-                          <Trash2 className="w-4 h-4" />
-                        )}
-                      </Button>
-                    </div>
-                  </div>
-                  <div className="flex-1 overflow-hidden p-4">
-                    {renderTranslationArea()}
+              <div className="flex flex-col h-full overflow-hidden border border-default-200 rounded-large">
+                <div className="modern-toolbar px-3 py-1.5 flex items-center justify-between shrink-0">
+                  <span className="text-sm text-default-500">Translation</span>
+                  <div className="flex items-center gap-0.5">
+                    <Button 
+                      isIconOnly
+                      size="sm"
+                      variant="light"
+                      onClick={handleCopyTranslation}
+                      className="toolbar-button"
+                      aria-label="Copy"
+                    >
+                      {copyTranslationStatus === 'success' ? (
+                        <Check className="w-4 h-4 text-success" />
+                      ) : (
+                        <Copy className="w-4 h-4" />
+                      )}
+                    </Button>
+                    <Button 
+                      isIconOnly
+                      size="sm"
+                      variant="light"
+                      onClick={handleClearTranslation}
+                      className="toolbar-button text-danger"
+                      aria-label="Clear"
+                    >
+                      {clearTranslationStatus === 'success' ? (
+                        <Check className="w-4 h-4 text-success" />
+                      ) : (
+                        <Trash2 className="w-4 h-4" />
+                      )}
+                    </Button>
                   </div>
                 </div>
-              </Card>
+                <div className="flex-1 overflow-hidden">
+                  {renderTranslationArea()}
+                </div>
+              </div>
             </div>
 
             <Button 

@@ -26,42 +26,68 @@ textarea {
   height: 100% !important;
   min-height: 100% !important;
   overflow-y: auto !important;
-  max-height: 100% !important;
+  max-height: none !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  resize: none !important;
+  border: none !important;
+  background: transparent !important;
 }
 
 .nextui-textarea-input-container {
   height: 100% !important;
   min-height: 100% !important;
-  max-height: 100% !important;
+  max-height: none !important;
   display: flex !important;
   flex-direction: column !important;
   overflow: hidden !important;
+  width: 100% !important;
+  border: none !important;
+  background: transparent !important;
 }
 
 .full-height-textarea {
   height: 100% !important;
   min-height: 100% !important;
-  max-height: 100% !important;
+  max-height: none !important;
   display: flex !important;
   flex-direction: column !important;
   overflow: hidden !important;
+  width: 100% !important;
+  border: none !important;
+  background: transparent !important;
 }
 
 .full-height-textarea > div {
   height: 100% !important;
   min-height: 100% !important;
-  max-height: 100% !important;
-  flex: 1 !important;
+  max-height: none !important;
+  flex: 1 1 auto !important;
   display: flex !important;
   flex-direction: column !important;
   overflow: hidden !important;
+  width: 100% !important;
+  border: none !important;
+  background: transparent !important;
 }
 
 .full-height-textarea textarea {
   height: 100% !important;
   min-height: 100% !important;
-  flex: 1 !important;
+  flex: 1 1 auto !important;
   padding: 0.75rem 1rem !important;
+  width: 100% !important;
+  resize: none !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+/* Ensure the card content fills the available space */
+.card-content {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  min-height: 100% !important;
 }
 
 /* Mobile responsive styles */
@@ -123,19 +149,22 @@ textarea {
 /* Modern toolbar styles */
 .modern-toolbar {
   position: relative;
-  background: linear-gradient(to right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent;
+  border-bottom: 1px solid var(--nextui-border-color);
 }
 
 .dark .modern-toolbar {
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.05));
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background: transparent;
+  border-bottom: 1px solid var(--nextui-border-color);
 }
 
 /* Animation styles */
 .toolbar-button {
-  position: relative;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease;
+}
+
+.toolbar-button:hover {
+  background: var(--nextui-default-100);
 }
 
 .toolbar-button svg {
@@ -144,7 +173,7 @@ textarea {
 
 .toolbar-button:hover {
   transform: translateY(-1px);
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--nextui-default-100);
 }
 
 .dark .toolbar-button:hover {
