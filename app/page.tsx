@@ -65,14 +65,16 @@ export default function Home() {
       document.documentElement.classList.remove('keyboard-visible');
     };
 
+    // Visual Viewport API handler
+    const handleVisualViewportResize = () => {
+      if (window.innerWidth <= 767) {
+        const isKeyboard = window.visualViewport!.height < window.innerHeight;
+        document.documentElement.classList.toggle('keyboard-visible', isKeyboard);
+      }
+    };
+
     // Visual Viewport API for more accurate keyboard detection
     if (window.visualViewport) {
-      const handleVisualViewportResize = () => {
-        if (window.innerWidth <= 767) {
-          const isKeyboard = window.visualViewport!.height < window.innerHeight;
-          document.documentElement.classList.toggle('keyboard-visible', isKeyboard);
-        }
-      };
       window.visualViewport.addEventListener('resize', handleVisualViewportResize);
     }
 
