@@ -43,61 +43,6 @@ export default function Home() {
   const [translationService, setTranslationService] = useState('openai');
   const abortControllerRef = useRef<AbortController | null>(null);
 
-  // Keyboard visibility detection
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    const handleFocus = () => {
-      // Check if the device is mobile
-      if (window.innerWidth <= 767) {
-        document.documentElement.classList.add('keyboard-visible');
-        // Scroll the focused element into view with a slight delay
-        setTimeout(() => {
-          const activeElement = document.activeElement;
-          if (activeElement instanceof HTMLElement) {
-            activeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          }
-        }, 100);
-      }
-    };
-
-    const handleBlur = () => {
-      document.documentElement.classList.remove('keyboard-visible');
-    };
-
-    // Visual Viewport API handler
-    const handleVisualViewportResize = () => {
-      if (window.innerWidth <= 767) {
-        const isKeyboard = window.visualViewport!.height < window.innerHeight;
-        document.documentElement.classList.toggle('keyboard-visible', isKeyboard);
-      }
-    };
-
-    // Visual Viewport API for more accurate keyboard detection
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', handleVisualViewportResize);
-    }
-
-    // Add event listeners for focus/blur on textareas
-    const textareas = document.querySelectorAll('textarea');
-    textareas.forEach(textarea => {
-      textarea.addEventListener('focus', handleFocus);
-      textarea.addEventListener('blur', handleBlur);
-    });
-
-    // Cleanup
-    return () => {
-      if (window.visualViewport) {
-        window.visualViewport.removeEventListener('resize', handleVisualViewportResize);
-      }
-      const textareas = document.querySelectorAll('textarea');
-      textareas.forEach(textarea => {
-        textarea.removeEventListener('focus', handleFocus);
-        textarea.removeEventListener('blur', handleBlur);
-      });
-    };
-  }, []);
-
   // Load initial state from localStorage on client side
   useEffect(() => {
     if (typeof window === 'undefined') return;

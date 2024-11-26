@@ -91,54 +91,6 @@ textarea {
   }
 }
 
-/* Mobile keyboard fixes */
-@media (max-width: 767px) {
-  /* Add a class to handle keyboard visibility */
-  .keyboard-visible {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .keyboard-visible .grid {
-    height: auto;
-    min-height: auto;
-    padding-bottom: 200px; /* Add padding to ensure content is visible above keyboard */
-  }
-
-  .keyboard-visible .card {
-    flex-shrink: 0;
-  }
-
-  /* Prevent unnecessary scrolling when keyboard is visible */
-  .keyboard-visible body {
-    height: auto;
-    min-height: 100%;
-    position: fixed;
-    width: 100%;
-    overflow: hidden;
-  }
-
-  /* Ensure textarea remains visible when focused */
-  .keyboard-visible .full-height-textarea {
-    position: relative;
-    z-index: 1;
-    min-height: 150px !important;
-  }
-
-  /* Add iOS-specific fixes */
-  @supports (-webkit-touch-callout: none) {
-    .keyboard-visible {
-      /* iOS-specific padding to handle keyboard better */
-      padding-bottom: env(safe-area-inset-bottom);
-    }
-  }
-}
-
 /* History panel responsive styles */
 @media (max-width: 767px) {
   .history-panel-open {
