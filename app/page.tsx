@@ -487,7 +487,7 @@ export default function Home() {
       <header className="w-full px-6 py-4 border-b border-default-200 bg-background/80 backdrop-blur-sm supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 shrink-0">
         <div className="max-w-[2000px] mx-auto flex justify-between items-center">
           <div className="flex items-center gap-2">
-            <h1 className="text-xl font-bold bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text text-transparent">
+            <h1 className="text-xl font-bold">
               OceanuoTranslate
             </h1>
           </div>
@@ -749,6 +749,7 @@ export default function Home() {
                   onToggleFavoritesOnly={handleToggleFavoritesOnly}
                   onSelectHistoryItem={handleSelectHistoryItem}
                   onDeleteItem={handleDeleteHistoryItem}
+                  setShowHistory={setShowHistory}
                 />
               </div>
             )}

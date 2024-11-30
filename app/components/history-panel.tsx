@@ -15,6 +15,7 @@ interface HistoryPanelProps {
   onToggleFavoritesOnly: () => void;
   onSelectHistoryItem: (item: TranslationHistoryItem) => void;
   onDeleteItem: (id: string) => void;
+  setShowHistory: (show: boolean) => void;
 }
 
 export function HistoryPanel({
@@ -24,7 +25,8 @@ export function HistoryPanel({
   onClearHistory,
   onToggleFavoritesOnly,
   onSelectHistoryItem,
-  onDeleteItem
+  onDeleteItem,
+  setShowHistory
 }: HistoryPanelProps) {
   const filteredItems = (history?.items || [])
     .filter(item => {
@@ -97,12 +99,20 @@ export function HistoryPanel({
             >
               <div 
                 className="flex flex-col cursor-pointer hover:opacity-80 transition-opacity"
-                onClick={() => onSelectHistoryItem(item)}
+                onClick={() => {
+                  onSelectHistoryItem(item);
+                  if (isMobile) {
+                    setShowHistory(false);
+                  }
+                }}
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') {
                     onSelectHistoryItem(item);
+                    if (isMobile) {
+                      setShowHistory(false);
+                    }
                   }
                 }}
               >
