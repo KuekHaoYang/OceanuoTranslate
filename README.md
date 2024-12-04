@@ -37,7 +37,7 @@ A modern, efficient web-based translation application built with Next.js, TypeSc
 ### Setup
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/oceanuo-translate.git
+git clone https://github.com/oceanuo/OceanuoTranslate.git
 cd oceanuo-translate
 ```
 
