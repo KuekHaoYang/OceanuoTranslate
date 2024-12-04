@@ -84,8 +84,5 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Contact
-Project Link: [https://github.com/yourusername/oceanuo-translate](https://github.com/yourusername/oceanuo-translate)
-
 ---
 Made with ❤️ using Next.js and TypeScript
