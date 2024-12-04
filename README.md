@@ -26,7 +26,7 @@ A modern, efficient web-based translation application built with Next.js, TypeSc
 - 🚀 Fast and efficient performance
 
 ## Demo
-![image](https://github.com/user-attachments/assets/9e33696a-6f2e-4499-b886-693e2c79af7d)
+![image](https://github.com/user-attachments/assets/5a550943-359b-40c2-af28-83c3f69da4d2)
 
 ## Installation
 
