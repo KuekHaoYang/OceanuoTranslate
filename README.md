@@ -1,57 +1,91 @@
-# OceanUO Translate
+# OceanuoTranslate
 
-A modern, feature-rich translation application built with Next.js that provides seamless language translation capabilities with a beautiful user interface.
+[![Next.js](https://img.shields.io/badge/Next.js-15.0.3-black)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC)](https://tailwindcss.com/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+A modern, efficient web-based translation application built with Next.js, TypeScript, and Tailwind CSS.
+
+## Table of Contents
+- [Features](#features)
+- [Demo](#demo)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
 
 ## Features
+- 🌐 Modern web-based translation interface
+- 🎨 Beautiful UI with NextUI components
+- 🌙 Dark/Light mode support
+- 📱 Responsive design
+- 📝 Translation history tracking
+- ⚙️ Customizable settings
+- 🚀 Fast and efficient performance
 
-- 🌐 Language Translation: Support for multiple languages with auto-detection capability
-- 📝 Real-time Translation: Translate text as you type
-- 💾 Translation History: Keep track of your previous translations
-- ⭐ Favorites System: Mark important translations for quick access
-- 🎨 Modern UI: Built with NextUI components for a sleek user experience
-- 🌓 Theme Support: Light and dark mode available
-- 📋 Clipboard Integration: Easy copy/paste functionality
+## Demo
+![image](https://github.com/user-attachments/assets/9e33696a-6f2e-4499-b886-693e2c79af7d)
+
+## Installation
+
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn
+
+### Setup
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/oceanuo-translate.git
+cd oceanuo-translate
+```
+
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Run the development server:
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Usage
+1. Enter text in the source language
+2. Select your desired target language
+3. Click translate to get your translation
+4. View translation history in the history panel
+5. Customize settings via the settings modal
 
 ## Tech Stack
-
-- [Next.js](https://nextjs.org/) - React framework for production
-- [NextUI](https://nextui.org/) - Beautiful, modern component library
-- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
-- [Framer Motion](https://www.framer.com/motion/) - Animation library
-- TypeScript - For type safety and better developer experience
-
-## Getting Started
-
-1. Clone the repository
-2. Install dependencies:
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
-
-3. Create a `.env` file in the root directory with your required environment variables
-
-4. Run the development server:
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   ```
-
-5. Open [http://localhost:3000](http://localhost:3000) with your browser to see the application
-
-## Development
-
-- `npm run dev` - Start the development server
-- `npm run build` - Build the application for production
-- `npm run start` - Start the production server
-- `npm run lint` - Run ESLint for code quality
+- [Next.js](https://nextjs.org/) - React framework
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [Tailwind CSS](https://tailwindcss.com/) - Styling
+- [NextUI](https://nextui.org/) - UI components
+- [Framer Motion](https://www.framer.com/motion/) - Animations
+- [next-themes](https://github.com/pacocoursey/next-themes) - Theme management
 
 ## Contributing
-
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## License
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-This project is private and not open for redistribution.
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Contact
+Project Link: [https://github.com/yourusername/oceanuo-translate](https://github.com/yourusername/oceanuo-translate)
+
+---
+Made with ❤️ using Next.js and TypeScript
