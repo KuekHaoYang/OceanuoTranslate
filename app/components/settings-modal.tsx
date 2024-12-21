@@ -315,7 +315,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
                 setShortcutKey(newShortcut);
               }
             }}
-            onClick={(e) => {
+            onClick={() => {
               setShortcutKey('');
             }}
             size="lg"
