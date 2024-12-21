@@ -534,12 +534,16 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
       isOpen={isOpen} 
       onClose={onClose}
       classNames={{
-        base: isMobile ? "settings-modal-mobile" : "",
-        wrapper: isMobile ? "items-start !m-0" : "",
+        base: `${isMobile ? "settings-modal-mobile" : ""} max-h-[90vh] min-w-[280px]`,
+        wrapper: isMobile ? "items-start !m-0" : "items-center",
         backdrop: isMobile ? "!bg-background" : "",
+        body: "p-0",
+        header: "border-b border-default-100",
+        footer: "border-t border-default-100 p-2",
       }}
       size={isMobile ? "full" : "2xl"}
       hideCloseButton={isMobile}
+      scrollBehavior="inside"
       motionProps={{
         variants: {
           enter: {
@@ -566,7 +570,7 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
           <>
             <ModalHeader className="flex flex-col gap-1">
               <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-bold">Settings</h2>
+                <h2 className="text-xl font-bold">Settings</h2>
                 {isMobile && (
                   <Button
                     isIconOnly
@@ -580,91 +584,95 @@ export function SettingsModal({ isOpen, onClose }: SettingsModalProps) {
               </div>
               <p className="text-sm text-default-500">Configure your translation preferences</p>
             </ModalHeader>
-            <ModalBody className="gap-8 pb-8">
-              <div className="settings-content min-h-[600px]">
-                <Tabs 
-                  selectedKey={selectedTab}
-                  onSelectionChange={(key) => setSelectedTab(key.toString())}
-                  aria-label="Settings tabs"
-                  variant="light"
-                  classNames={{
-                    tabList: "settings-tab-list",
-                    cursor: "w-full",
-                    tab: "settings-tab-button",
-                    tabContent: "group-data-[selected=true]:text-primary"
-                  }}
-                >
-                  <Tab 
-                    key="service" 
-                    title={
-                      <div className="flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-                          <path d="M12 6v6l4 2"/>
-                        </svg>
-                        <span className="settings-tab-text">Service</span>
-                      </div>
-                    }
-                  >
-                    {renderServiceSettings()}
-                  </Tab>
-                  <Tab 
-                    key="shortcuts" 
-                    title={
-                      <div className="flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                        </svg>
-                        <span className="settings-tab-text">Shortcuts</span>
-                      </div>
-                    }
-                  >
-                    {renderShortcutsAndPresets()}
-                  </Tab>
-                  <Tab 
-                    key="display" 
-                    title={
-                      <div className="flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                        </svg>
-                        <span className="settings-tab-text">Display</span>
-                      </div>
-                    }
-                  >
-                    {renderDisplaySettings()}
-                  </Tab>
-                </Tabs>
-              </div>
+            <ModalBody>
+              <div className="flex flex-col h-full">
+                <div className="flex-1 overflow-y-auto px-3 md:px-6">
+                  <div className="settings-content py-2 md:py-4">
+                    <Tabs 
+                      selectedKey={selectedTab}
+                      onSelectionChange={(key) => setSelectedTab(key.toString())}
+                      aria-label="Settings tabs"
+                      variant="light"
+                      classNames={{
+                        tabList: "settings-tab-list sticky top-0 bg-background/80 backdrop-blur-sm z-10",
+                        cursor: "w-full",
+                        tab: "settings-tab-button",
+                        tabContent: "group-data-[selected=true]:text-primary"
+                      }}
+                    >
+                      <Tab 
+                        key="service" 
+                        title={
+                          <div className="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                              <path d="M12 6v6l4 2"/>
+                            </svg>
+                            <span className="settings-tab-text">Service</span>
+                          </div>
+                        }
+                      >
+                        {renderServiceSettings()}
+                      </Tab>
+                      <Tab 
+                        key="shortcuts" 
+                        title={
+                          <div className="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            <span className="settings-tab-text">Shortcuts</span>
+                          </div>
+                        }
+                      >
+                        {renderShortcutsAndPresets()}
+                      </Tab>
+                      <Tab 
+                        key="display" 
+                        title={
+                          <div className="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                            </svg>
+                            <span className="settings-tab-text">Display</span>
+                          </div>
+                        }
+                      >
+                        {renderDisplaySettings()}
+                      </Tab>
+                    </Tabs>
+                  </div>
+                </div>
 
-              <div className="flex justify-end gap-2 pt-4 border-t border-default-100">
-                <Button 
-                  color="danger" 
-                  variant="flat" 
-                  onPress={handleRestoreDefaults}
-                  size="lg"
-                  className="font-medium"
-                >
-                  Restore Defaults
-                </Button>
-                <Button 
-                  color="default" 
-                  variant="light" 
-                  onPress={onClose}
-                  size="lg"
-                  className="font-medium"
-                >
-                  Cancel
-                </Button>
-                <Button 
-                  color="primary" 
-                  onPress={handleSave}
-                  size="lg"
-                  className="font-medium"
-                >
-                  Save Changes
-                </Button>
+                <div className="flex flex-wrap justify-end gap-2 p-2 bg-background/80 backdrop-blur-sm sticky bottom-0">
+                  <Button 
+                    color="danger" 
+                    variant="flat" 
+                    onPress={handleRestoreDefaults}
+                    size={isMobile ? "sm" : "lg"}
+                    className="flex-1 md:flex-none font-medium"
+                  >
+                    Restore
+                  </Button>
+                  <Button 
+                    color="default" 
+                    variant="light" 
+                    onPress={onClose}
+                    size={isMobile ? "sm" : "lg"}
+                    className="flex-1 md:flex-none font-medium"
+                  >
+                    Cancel
+                  </Button>
+                  <Button 
+                    color="primary" 
+                    onPress={handleSave}
+                    size={isMobile ? "sm" : "lg"}
+                    className="flex-1 md:flex-none font-medium"
+                  >
+                    Save
+                  </Button>
+                </div>
               </div>
             </ModalBody>
           </>
