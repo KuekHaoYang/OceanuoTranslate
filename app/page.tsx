@@ -20,6 +20,13 @@ interface TranslationState {
   error?: string
 }
 
+interface TranslationPreset {
+  id: string
+  shortcut: string
+  sourceLang: string
+  targetLang: string
+}
+
 export default function Home() {
   const [sourceText, setSourceText] = useState("");
   const [translation, setTranslation] = useState<TranslationState>({
@@ -41,7 +48,9 @@ export default function Home() {
     showFavoritesOnly: false
   });
   const [translationService, setTranslationService] = useState('openai');
+  const [shortcutKey, setShortcutKey] = useState('Control+Enter');
   const abortControllerRef = useRef<AbortController | null>(null);
+  const [translationPresets, setTranslationPresets] = useState<TranslationPreset[]>([]);
 
   // Load initial state from localStorage on client side
   useEffect(() => {
@@ -51,6 +60,7 @@ export default function Home() {
     setTargetLang(getLocalStorage('targetLang', "English"));
     setOneByOne(getLocalStorage('oneByOne') === 'true');
     setTranslationService(getLocalStorage('translationService', 'openai'));
+    setShortcutKey(getLocalStorage('shortcutKey', 'Control+Enter'));
     
     try {
       const savedHistory = getLocalStorage('translationHistory');
@@ -76,7 +86,9 @@ export default function Home() {
     const handleStorageChange = () => {
       if (typeof window === 'undefined') return;
       const newService = getLocalStorage('translationService', 'openai');
+      const newShortcutKey = getLocalStorage('shortcutKey', 'Control+Enter');
       setTranslationService(newService);
+      setShortcutKey(newShortcutKey);
       if (newService === 'deepl') {
         setSourceLang('auto-detect');
         setTargetLang('EN');
@@ -84,6 +96,14 @@ export default function Home() {
       } else {
         setSourceLang('auto-detect');
         setTargetLang('English');
+      }
+      const savedPresets = getLocalStorage('translationPresets');
+      if (savedPresets) {
+        try {
+          setTranslationPresets(JSON.parse(savedPresets));
+        } catch (error) {
+          console.error('Error parsing translation presets:', error);
+        }
       }
     };
 
@@ -482,6 +502,57 @@ export default function Home() {
     return languages;
   }, [translationService]);
 
+  // Keyboard event handler for the textarea
+  const handleTextAreaKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const shortcutParts = shortcutKey.split('+');
+    const lastKey = shortcutParts[shortcutParts.length - 1];
+    const hasCtrl = shortcutParts.includes('Control');
+    const hasAlt = shortcutParts.includes('Alt');
+    const hasShift = shortcutParts.includes('Shift');
+    const hasMeta = shortcutParts.includes('Meta');
+
+    if (e.key === lastKey &&
+        (!hasCtrl || e.ctrlKey) &&
+        (!hasAlt || e.altKey) &&
+        (!hasShift || e.shiftKey) &&
+        (!hasMeta || e.metaKey)) {
+      e.preventDefault();
+      handleTranslate();
+    }
+  };
+
+  // Global keyboard event handler for translation presets
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Skip if user is typing in an input field or textarea
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+        return;
+      }
+
+      const modifiers = [];
+      if (e.ctrlKey) modifiers.push('Control');
+      if (e.altKey) modifiers.push('Alt');
+      if (e.shiftKey) modifiers.push('Shift');
+      if (e.metaKey) modifiers.push('Meta');
+      
+      const key = e.key;
+      if (!['Control', 'Alt', 'Shift', 'Meta'].includes(key)) {
+        const pressedShortcut = [...modifiers, key].join('+');
+        
+        // Find matching preset
+        const matchingPreset = translationPresets.find(preset => preset.shortcut === pressedShortcut);
+        if (matchingPreset) {
+          e.preventDefault();
+          setSourceLang(matchingPreset.sourceLang);
+          setTargetLang(matchingPreset.targetLang);
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [translationPresets]);
+
   return (
     <div className="h-screen flex flex-col bg-gradient-to-br from-background to-default-50">
       <header className="w-full px-6 py-4 border-b border-default-200 bg-background/80 backdrop-blur-sm supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 shrink-0">
@@ -641,6 +712,7 @@ export default function Home() {
                       placeholder="Enter text to translate..."
                       value={sourceText}
                       onChange={(e) => setSourceText(e.target.value)}
+                      onKeyDown={handleTextAreaKeyDown}
                       classNames={{
                         base: "h-full",
                         input: "h-full resize-none",

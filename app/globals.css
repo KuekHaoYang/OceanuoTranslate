@@ -105,18 +105,19 @@ textarea {
 
   /* Settings modal mobile styles */
   .settings-modal-mobile {
-    margin: 0 !important;
-    height: calc(100vh - 64px) !important;
+    height: 100vh !important;
     max-height: none !important;
     position: absolute !important;
-    top: 64px !important;
+    top: 0 !important;
     border-radius: 0 !important;
     background: var(--background) !important;
+    overflow-y: auto !important;
   }
 
   .settings-modal-mobile [role="dialog"] {
     height: 100% !important;
     max-height: none !important;
+    overflow-y: auto !important;
   }
 }
 
@@ -182,4 +183,110 @@ textarea {
 .dark .glass-effect {
   background: rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Settings tabs styles */
+.settings-tab-list {
+  display: flex;
+  gap: 1rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  border-bottom: 1px solid var(--nextui-border-color);
+}
+
+.settings-tab-button {
+  flex: 1;
+  height: 3rem;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  color: var(--nextui-foreground-500);
+}
+
+.settings-tab-button[data-selected=true] {
+  color: var(--nextui-primary);
+  font-weight: 500;
+}
+
+.settings-tab-button[data-selected=true]::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--nextui-primary);
+}
+
+@media (max-width: 767px) {
+  .settings-tab-list {
+    gap: 0;
+    border-radius: 0.5rem;
+    background: var(--nextui-default-100);
+    padding: 0.25rem;
+  }
+
+  .settings-tab-button {
+    border-radius: 0.375rem;
+    padding: 0.5rem;
+  }
+
+  .settings-tab-button[data-selected=true] {
+    background: var(--nextui-content1);
+  }
+
+  .settings-tab-button[data-selected=true]::after {
+    display: none;
+  }
+
+  .settings-tab-text {
+    font-size: 0.875rem;
+  }
+}
+
+/* Settings modal styles */
+.settings-modal-mobile {
+  height: 100vh !important;
+  max-height: none !important;
+  position: absolute !important;
+  top: 0 !important;
+  border-radius: 0 !important;
+  background: var(--background) !important;
+  overflow-y: auto !important;
+}
+
+.settings-modal-mobile [role="dialog"] {
+  height: 100% !important;
+  max-height: none !important;
+  overflow-y: auto !important;
+}
+
+/* Settings content styles */
+.settings-content {
+  min-height: 600px;
+  height: 600px;
+  overflow-y: auto;
+  padding-right: 1rem;
+}
+
+.settings-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.settings-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.settings-content::-webkit-scrollbar-thumb {
+  background-color: var(--nextui-default-200);
+  border-radius: 3px;
+}
+
+.dark .settings-content::-webkit-scrollbar-thumb {
+  background-color: var(--nextui-default-100);
 }
